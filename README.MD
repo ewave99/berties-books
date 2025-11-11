@@ -12,7 +12,7 @@ Dependencies: node.js, Express, EJS, MySQL.
 4. `npm install`
 5. From the MySQL shell run:
     1. `source create_db.sql;`
-    2. `source insert_test_data.sql`
+    2. `source insert_test_data.sql;`
 
 ## Run the project
 
