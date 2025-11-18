@@ -9,14 +9,12 @@
         <table>
             <tr>
                 <th>Username</th>
-                <th>First name</th>
-                <th>Last name</th>
+                <th>Name</th>
             </tr>
             <% for (let {username, first_name, last_name} of userData) { %>
             <tr>
                 <td><%= username %> </td>
-                <td><%= first_name %></td>
-                <td><%= last_name %></td>
+                <td><%= first_name %> <%= last_name %></td>
             </tr>
             <% } %>
         </table>
