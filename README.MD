@@ -2,7 +2,7 @@
 
 Code for Dynamic Web Applications module, week 6.
 
-Dependencies: node.js, Express, EJS, MySQL.
+Dependencies: node.js, Express, EJS, MySQL, Dotenv.
 
 ## Install the project
 
@@ -17,3 +17,11 @@ Dependencies: node.js, Express, EJS, MySQL.
 ## Run the project
 
 1. `node index.js`
+
+## Dotenv
+
+The database modules are secured using Dotenv. 
+Rather than hard-coding the database username and password into `index.js`, the credentials are stored in a file called `.env`, using key-value pairs.
+These attributes can then be accessed from `index.js` using the format `process.env.KEY`.
+The `.env` file is added to the gitignore so it is not visible from GitHub.
+The `.env` file cannot be accessed via the web server.
