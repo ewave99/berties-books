@@ -11,7 +11,12 @@ const saltRounds = 10;
 // Render registration form page for a new user.
 router.get('/register', function (req, res, next) {
     res.render('register.ejs')
-})
+});
+
+// Render login page for user.
+router.get("/login", function (req, res, next) {
+    res.render("login.ejs");
+});
 
 // Render page that lists all the users in the 'users' table in our database.
 router.get('/list', function (req, res, next) {
@@ -49,5 +54,31 @@ router.post('/registered', function (req, res, next) {
     });                                                                        
 }); 
 
+// Process the user's login details and render either a success or failure page.
+router.post("/loggedin", function (req, res, next) {
+    // Select the hashed password from the database, where the username matches the username entered.
+    const sqlQuery = "SELECT hashed_password FROM users WHERE username = ?";
+    const params = [req.body.username];
+    db.query(sqlQuery, params, (err, result) => {
+        if (err)
+            // If username does not exist in database... Send an error message.
+            next(err);
+        else {
+            let hashedPassword = result[0].hashed_password;
+            // Compare the user's password with the hashed password in the database.
+            bcrypt.compare(req.body.password, hashedPassword, function (err, result) {
+                if (err)
+                    next(err);
+                else if (result === true)
+                    res.send("Login successful.");
+                else
+                    res.send("Sorry, your login was unsuccessful. Password did not match.");
+            });
+        }
+    });
+}, function (err) {
+    res.send(err);
+});
+
 // Export the router object so index.js can access it
-module.exports = router
+module.exports = router;
