@@ -62,22 +62,42 @@ router.post("/loggedin", function (req, res, next) {
     db.query(sqlQuery, params, (err, result) => {
         if (err)
             // If username does not exist in database... Send an error message.
-            next(err);
+            res.send(err);
         else {
             let hashedPassword = result[0].hashed_password;
             // Compare the user's password with the hashed password in the database.
             bcrypt.compare(req.body.password, hashedPassword, function (err, result) {
+                const username = req.body.username;
+
+                const datetime = new Date();
+                const year = datetime.getFullYear();
+                const month = datetime.getMonth();
+                const day = datetime.getDate();
+                const hour = datetime.getHours();
+                const min = datetime.getMinutes();
+                const sec = datetime.getSeconds();
+
+                const dateString = `${year}-${month}-${day} ${hour}:${min}:${sec}`;
+
+                const successful = result;
+
+                const sqlQuery = "INSERT INTO logins (username, login_datetime, successful) VALUES (?, ?, ?)";
+                const params = [username, dateString, successful];
+
                 if (err)
-                    next(err);
-                else if (result === true)
-                    res.send("Login successful.");
+                    res.send(err);
                 else
-                    res.send("Sorry, your login was unsuccessful. Password did not match.");
+                    db.query(sqlQuery, params, (err, result) => {
+                        if (err)
+                            res.send(err);
+                        if (successful === true)
+                            res.send("Login successful.");
+                        else
+                            res.send("Sorry, your login was unsuccessful. Password did not match. Attempt has been logged.");
+                    });
             });
         }
     });
-}, function (err) {
-    res.send(err);
 });
 
 // Export the router object so index.js can access it

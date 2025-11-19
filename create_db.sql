@@ -18,6 +18,13 @@ CREATE TABLE IF NOT EXISTS users (
     hashed_password CHAR(60),
     PRIMARY KEY (username)
 );
+CREATE TABLE IF NOT EXISTS logins (
+    id INT AUTO_INCREMENT,
+    username VARCHAR(20),
+    login_datetime DATETIME,
+    successful BOOLEAN,
+    PRIMARY KEY(id)
+);
 
 # Create the application user
 CREATE USER IF NOT EXISTS 'berties_books_app'@'localhost' IDENTIFIED BY 'qwertyuiop';
