@@ -31,6 +31,20 @@ router.get('/list', function (req, res, next) {
     });
 });
 
+router.get("/audit", function (req, res, next) {
+    // Query database to get list of login attempts.
+    const sqlQuery = "SELECT username, login_datetime, successful FROM logins";
+    // Execute the query
+    db.query(sqlQuery, (err, result) => {
+        if (err)
+            next(err);
+        else {
+            console.log(result[0].login_datetime);
+            res.render("list_audits.ejs", {auditData: result});
+        }
+    });
+});
+
 // Render the registration success page.
 router.post('/registered', function (req, res, next) {
     // Save data in database

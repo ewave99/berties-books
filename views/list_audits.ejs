@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List of login attempts for <%=shopData.shopName%></title>
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+    </head>
+    <body>
+        <h1>List of login attempts for <%=shopData.shopName%></h1>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Date and Time</th>
+                <th>Successful?</th>
+            </tr>
+            <% for (let {username, login_datetime, successful} of auditData) { %>
+            <tr>
+                <td><%= username %> </td>
+                <td><%= login_datetime %> </td>
+                <td><%= successful == true ? "Yes" : "No" %> </td>
+            </tr>
+            <% } %>
+        </table>
+    </body>
+</html>
