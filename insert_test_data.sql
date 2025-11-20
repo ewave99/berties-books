@@ -7,3 +7,6 @@ VALUES
     ('Brighton Rock',   20.25),
     ('Brave New World', 25.00), 
     ('Animal Farm',     12.99);
+
+INSERT INTO users (username, first_name, last_name, email, hashed_password)
+VALUES ('gold', 'Goldsmiths', 'UoL', 'gold@smiths.com', '$2b$10$D8CaqRfZ4AirTnHzAGEMsuJ0P1ubBKbq.yYeg8EMU2woq/PE7FOJG');
